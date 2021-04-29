@@ -5,13 +5,13 @@ const { validationResult } = require('express-validator');
 exports.create = async (req, res) => {
     let errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(400).json({ errors: errors.array() })
-    }
+        return res.status(400).json({ errors: errors.array() });
+    };
     const {email, password} = req.body;
     try {
         let user = await User.findOne({email});
         if(user){
-            return res.status(400).json({ msg: "Este correo ya esta registrado" })
+            return res.status(400).json({ msg: "Este correo ya esta registrado" });
         };
 
         // Crear usuario
@@ -23,10 +23,10 @@ exports.create = async (req, res) => {
 
         // Guardar usuario
         await user.save();
-        res.status(200).json({ msg: "Usuario registrado correctamente" })
+        res.status(200).json({ msg: "Usuario registrado correctamente" });
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({ msg: "Hubo un error en el servidor" })
+        res.status(500).json({ msg: "Hubo un error en el servidor", errors: error });
     }
 };
