@@ -26,6 +26,7 @@ exports.authenticateUser = async (req, res, next) => {
             // crear firma con JWT
             const token = jwt.sign({
                 id: user._id,
+                name: user.name,
                 email: user.email
             }, process.env.SECRET, {
                 expiresIn: '8h'
